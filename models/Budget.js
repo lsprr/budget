@@ -6,10 +6,10 @@ const {
 const now = new Date().getTime()
 
 const BudgetSchema = new Schema({
-    description: {
-        type: String,
-        required: true
-    },
+    // description: {
+    //     type: String,
+    //     required: true
+    // },
     value: {
         type: Number,
         required: true,

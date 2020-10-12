@@ -21,12 +21,12 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const {
-        description,
+        // description,
         value,
         date
     } = req.body
     const newBudget = new Budget({
-        description,
+        // description,
         value,
         date
     })
