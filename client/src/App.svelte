@@ -1,10 +1,13 @@
 <script>
+import { onMount } from 'svelte';
 import axios from 'axios';
-import { onMount } from 'svelte'
+import Balance from './components/Balance.svelte';
+import Transaction from './components/Transaction.svelte';
 let amount = 0;
 let typeOfTransaction = '+';
 let transactions = []
 
+$: sortedTransactions = transactions.sort((a,b) => b.date - a.date);
 $: disabled = !amount;
 $: balance = transactions.reduce((acc, t) => acc + t.value, 0);
 $: income = transactions
@@ -37,37 +40,14 @@ async function removeTransaction(id) {
 }
 </script>
 
-
-
 <main class="container">
 	<section id="balance">
-
-		<header>
-			<h1>Dashboard</h1>
-			<p>Current Balance</p>
-			<h2>${balance}</h2>
-		</header>
-
-		<div>
-
-			<aside class="income-expense" id="income">
-				<span>INCOME</span>
-				<span>$ {income}</span>
-			</aside>
-
-			<aside class="income-expense" id="expense">
-				<span>EXPENSE</span>
-				<span>$ {expenses}</span>
-			</aside>
-
-		</div>
-
+		<Balance {balance} {income} {expenses} />
 	</section>
 
 	<section id="chart"></section>
 
 	<section id="transactions">
-
 		<div class="field has-addons">
 			<p class="control">
 				<span class="select">
@@ -86,28 +66,13 @@ async function removeTransaction(id) {
 				</button>
 			</p>
 		</div>
-
 		<header id="transactions-header">
 			<span>Transactions</span>
 			<span>Show All</span>
 		</header>
-
-		{#each transactions as transaction (transaction._id)}
-		<div class="transactions-div">
-
-			<div class="transaction">
-				<span>{transaction.description}</span>
-				<span>{transaction.date}</span>
-			</div>
-
-			<div class="amount" id="{transaction.value > 0 ? 'positive-amount' : 'negative-amount'}">
-				<span>{transaction.value}</span>
-				<button class="delete" on:click={() => removeTransaction(transaction._id)} />
-			</div>
-
-		</div>
+		{#each sortedTransactions as transaction (transaction._id)}
+			<Transaction {transaction} {removeTransaction} />
 		{/each}
-
 	</section>
 </main>
 
@@ -117,39 +82,6 @@ async function removeTransaction(id) {
 	flex-direction: column;
 	justify-content: space-around;
 	height: 35%;
-}
-
-#balance header h1,
-header h2,
-header p {
-	margin: 0 24px;
-}
-
-#balance header p {
-	color: #5C6062;
-	font-size: 14px;
-}
-
-#balance div {
-	display: flex;
-}
-
-.income-expense {
-	display: flex;
-	flex-direction: column;
-}
-
-.income-expense span {
-	margin: 0 24px;
-	font-size: 14px;
-}
-
-#income span:first-of-type {
-	color: #00F5C3;
-}
-
-#expense span:first-of-type {
-	color: #EF2460;
 }
 
 #chart {
@@ -187,35 +119,4 @@ main {
 	color: #00F5C3;
 }
 
-.transactions-div {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 30%;
-	width: 85%;
-	background-color: #1E2021;
-	border-radius: 4px;
-	margin: 0 auto;
-}
-
-.transactions-div span {
-	margin: 0 16px;
-}
-
-.transaction {
-	display: flex;
-	flex-direction: column;
-}
-
-.transaction span:nth-of-type(2) {
-	font-size: 12px;
-}
-
-#positive-amount span {
-	color: #00F5C3
-}
-
-#negative-amount span {
-	color: #EF2460
-}
 </style>
