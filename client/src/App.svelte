@@ -1,52 +1,55 @@
 <script>
-import { onMount } from 'svelte';
+import {
+	onMount
+} from 'svelte';
 import axios from 'axios';
 import Balance from './components/Balance.svelte';
 import Transaction from './components/Transaction.svelte';
 import Loading from './components/Loading.svelte';
+import {
+	transactions,
+	sortedTransactions,
+	balance,
+	income,
+	expenses
+} from './stores';
+
 let amount = 0;
 let typeOfTransaction = '+';
-let transactions = [];
 let loading = false;
 
-$: sortedTransactions = transactions.sort((a,b) => b.date - a.date);
 $: disabled = !amount;
-$: balance = transactions.reduce((acc, t) => acc + t.value, 0);
-$: income = transactions
-	.filter(t => t.value > 0)
-	.reduce ((acc, t) => acc + t.value, 0)
-$: expenses = transactions
-	.filter(t => t.value < 0)
-	.reduce((acc , t) => acc + t.value, 0)
 
-onMount(async() => {
+onMount(async () => {
 	loading = true;
-    const { data } = await axios.get('/api/budgets');
-	transactions = data;
+	const {
+		data
+	} = await axios.get('/api/budgets');
+	$transactions = data;
 	loading = false;
 })
 
 async function addTransaction() {
-    const transaction = {
-        date: new Date().getTime(),
-        value: typeOfTransaction === '+' ? amount : amount * -1
-    }
-    const response = await axios.post('/api/budgets', transaction);
-    transactions = [response.data, ...transactions];
-    amount = 0;
+	const transaction = {
+		date: new Date().getTime(),
+		value: typeOfTransaction === '+' ? amount : amount * -1
+	}
+	const response = await axios.post('/api/budgets', transaction);
+	$transactions = [response.data, ...$transactions];
+	amount = 0;
 }
 
 async function removeTransaction(id) {
 	const response = await axios.delete('/api/budgets/' + id)
 	if (response.data.id === id) {
-		transactions = transactions.filter(transaction => transaction._id != id)
+		$transactions = $transactions.filter(transaction => transaction._id != id)
 	}
 }
 </script>
 
 <main class="container">
 	<section id="balance">
-		<Balance {balance} {income} {expenses} />
+		<Balance {$balance} {$income} {$expenses} />
 	</section>
 
 	<section id="chart"></section>
@@ -77,7 +80,7 @@ async function removeTransaction(id) {
 		{#if loading}
 			<Loading />
 		{/if}
-		{#each sortedTransactions as transaction (transaction._id)}
+		{#each $sortedTransactions as transaction (transaction._id)}
 			<Transaction {transaction} {removeTransaction} />
 		{/each}
 	</section>
