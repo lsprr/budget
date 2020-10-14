@@ -14,7 +14,9 @@ export let removeTransaction;
     <div class="amount" id="{transaction.value > 0 ? 'positive-amount' : 'negative-amount'}"
 		transition:slide={{duration: 500 }}>
 		<span>{transaction.value}</span>
-        <button class="delete" on:click={()=> removeTransaction(transaction._id)} />
+        <button class="delete" on:click={()=> removeTransaction(transaction._id)}>
+			<i class="material-icons">delete_outline</i>
+		</button>
     </div>
 
 </div>
@@ -47,6 +49,19 @@ export let removeTransaction;
 	font-size: 12px;
 }
 
+#positive-amount,
+#negative-amount {
+	display: flex;
+	justify-content: center;
+	justify-items: center;
+}
+
+#positive-amount span,
+#negative-amount span {
+	display: flex;
+	margin-top: 0.5rem;
+}
+
 #positive-amount span {
 	color: #00F5C3
 }
@@ -55,4 +70,11 @@ export let removeTransaction;
 	color: #EF2460
 }
 
+.delete {
+	background-color: transparent;
+	color: white;
+	border: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
 </style>

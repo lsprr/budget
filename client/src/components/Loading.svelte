@@ -1,1 +1,3 @@
-<progress class="progress is-small is-info" max="100" />
+<div class="progress">
+    <div class="indeterminate"></div>
+</div>

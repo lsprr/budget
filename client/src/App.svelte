@@ -13,7 +13,7 @@ import {
 	expenses
 } from './stores';
 
-let amount = 0;
+let amount = null;
 let typeOfTransaction = '+';
 let loading = false;
 
@@ -35,7 +35,7 @@ async function addTransaction() {
 	}
 	const response = await axios.post('/api/budgets', transaction);
 	$transactions = [response.data, ...$transactions];
-	amount = 0;
+	amount = null;
 }
 
 async function removeTransaction(id) {
@@ -44,6 +44,11 @@ async function removeTransaction(id) {
 		$transactions = $transactions.filter(transaction => transaction._id != id)
 	}
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const elems = document.querySelectorAll('select');
+    const instances = M.FormSelect.init(elems);
+});
 
 </script>
 
@@ -75,27 +80,29 @@ async function removeTransaction(id) {
 	</section> -->
 
 	<section id="transactions">
-		<!-- <div class="field has-addons">
-			<p class="control">
-				<span class="select">
-					<select bind:value={typeOfTransaction}>
-						<option value="+">+</option>
-						<option value="-">-</option>
-					</select>
-				</span>
-			</p>
-			<p class="control is-expanded">
-				<input class="input" type="number" bind:value={amount} placeholder="Amount of money">
-			</p>
-			<p class="control">
-				<button class="button" on:click={addTransaction} {disabled}>
-					Save
-				</button>
-			</p>
-		</div> -->
+			<div class="col s12">
+				<div class="input-field col s12">
+					<input id="description" type="text" class="validate" required>
+					<label for="description">Description</label>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="input-field col s12">
+					<input id="amount" type="number" bind:value={amount} class="validate" required>
+					<label for="amount">Amount</label>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="input-field col s12 right-align">
+					<button class="waves-effect waves-light btn" on:click={addTransaction} {disabled}>
+						Save
+					</button>
+				</div>
+			</div>
+
 		<header id="transactions-header">
 			<span>Transactions</span>
-			<span>Show All</span>
+			<!-- <span>Show All</span> -->
 		</header>
 		{#if loading}
 			<Loading />
@@ -107,6 +114,26 @@ async function removeTransaction(id) {
 </main>
 
 <style>
+
+.input-field>label {
+	color: white;
+}
+
+input:not([type]),
+input[type="text"]:not(.browser-default),
+input[type="number"]:not(.browser-default) {
+	color: white;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type=number] {
+	-moz-appearance: textfield;
+}
 
 #balance {
 	display: flex;
@@ -120,16 +147,24 @@ async function removeTransaction(id) {
 header h2,
 header p {
 	margin: 0 24px;
+	margin-left: 0;
 }
 
 #balance header p {
 	color: #5C6062;
-	font-size: 14px;
+	/* font-size: 1.5rem; */
+	margin-bottom: 1rem;
+	margin-top: 1rem;
 }
 
 /* #balance div, */
 #balance div {
 	display: flex;
+	margin-top: 1.5rem;
+}
+
+#balance div aside span {
+	margin-left: 0;
 }
 
 .income-expense {
@@ -165,7 +200,7 @@ main {
 
 #transactions-header {
 	display: flex;
-	font-size: 14px;
+	/* font-size: 14px; */
 	justify-content: space-between;
 	margin-bottom: 1rem;
 }
