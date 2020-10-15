@@ -9,6 +9,7 @@ const {
     mongoURI
 } = require('./config.js')
 const budgetsRouter = require('./routes/budgets')
+const path = require('path')
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -20,11 +21,15 @@ mongoose.connect(mongoURI, {
     useUnifiedTopology: true,
     })
     .then(() => console.log('MongoDB database is connected'))
-    .catch((err) => console.error(err))
+    .catch((error) => console.error(error))
 
 app.use('/api/budgets', budgetsRouter)
 
-
-app.get('/', (req, res) => res.send('hello'))
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/public'))
+    app.get('*', (request, response) =>{
+        response.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'))
+    })
+}
 
 app.listen(port, () => console.log('Express is running at port ' + port))
