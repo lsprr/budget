@@ -6,7 +6,7 @@ export let removeTransaction;
 
 <div class="transactions-div">
 
-    <div class="transaction">
+    <div class="transaction" transition:slide={{duration: 500 }}>
         <span>{transaction.description}</span>
         <span>{new Date(transaction.date).toLocaleString()}</span>
     </div>

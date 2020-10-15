@@ -83,12 +83,10 @@ async function removeTransaction(id) {
 			</div>
 		</div>
 
-		{#if $transactions.length > 0}
 		<header id="transactions-header">
 			<span>Transactions</span>
 			<!-- <span>Show All</span> -->
 		</header>
-		{/if}
 		{#if loading}
 			<Loading />
 		{/if}
