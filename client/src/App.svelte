@@ -4,6 +4,7 @@ import {
 	onMount
 } from 'svelte';
 import axios from 'axios';
+import Balance from './components/Balance.svelte';
 import Transaction from './components/Transaction.svelte';
 import Loading from './components/Loading.svelte';
 import {
@@ -52,26 +53,9 @@ async function removeTransaction(id) {
 </script>
 
 <main class="container">
+
 	<section id="balance">
-		<header>
-			<h1>Dashboard</h1>
-			<p>Current Balance</p>
-			<h2>${$balance}</h2>
-		</header>
-
-		<div>
-
-			<aside class="income-expense" id="income">
-				<span>Income</span>
-				<span>$ {$income}</span>
-			</aside>
-
-			<aside class="income-expense" id="expense">
-				<span>Expense</span>
-				<span>$ {$expenses}</span>
-			</aside>
-
-		</div>
+		<Balance {balance} {income} {expenses} />
 	</section>
 
 	<!-- <section id="chart">
@@ -112,6 +96,7 @@ async function removeTransaction(id) {
 			<Transaction {transaction} {removeTransaction} />
 		{/each}
 	</section>
+
 </main>
 
 <style>
@@ -136,61 +121,18 @@ input[type=number] {
 	-moz-appearance: textfield;
 }
 
+main {
+	color: #fff;
+	background-color: #0F1214;
+	border-radius: 4px;
+}
+
 #balance {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
 	margin-bottom: 10rem;
 	margin-top: 5rem;
-}
-
-#balance header h1,
-header h2,
-header p {
-	margin: 0 24px;
-	margin-left: 0;
-}
-
-#balance header p {
-	color: #5C6062;
-	/* font-size: 1.5rem; */
-	margin-bottom: 1rem;
-	margin-top: 1rem;
-}
-
-/* #balance div, */
-#balance div {
-	display: flex;
-	margin-top: 1.5rem;
-}
-
-#balance div aside span {
-	margin-left: 0;
-}
-
-.income-expense {
-	display: flex;
-	flex-direction: column;
-}
-
-.income-expense span {
-	margin: 0 24px;
-	font-size: 14px;
-	text-transform: uppercase;
-}
-
-#income span:first-of-type {
-	color: #00F5C3;
-}
-
-#expense span:first-of-type {
-	color: #EF2460;
-}
-
-main {
-	color: #fff;
-	background-color: #0F1214;
-	border-radius: 4px;
 }
 
 #transactions {
