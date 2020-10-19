@@ -7,26 +7,38 @@
 <style>
     header h1,
     header h2,
-    header p {
+    header h3 {
         margin: 0 24px;
         margin-left: 0;
+        text-align: center;
     }
 
-    header p {
+    header h1 {
+        font-size: xx-large;
+    }
+
+    header h2 {
         color: #a0a4a6;
-        /* font-size: 1.5rem; */
+        font-size: medium;
         margin-bottom: 1rem;
         margin-top: 1rem;
+    }
+
+    header h3 {
+        font-size: x-large;
     }
 
     /* #balance div, */
     div {
         display: flex;
+        margin-left: auto;
+        margin-right: auto;
         margin-top: 1.5rem;
+        text-align: center;
     }
 
     div aside span {
-        margin-left: 0;
+        font-size: large;
     }
 
     .income-expense {
@@ -36,7 +48,6 @@
 
     .income-expense span {
         margin: 0 24px;
-        font-size: 14px;
         text-transform: uppercase;
     }
 
@@ -47,12 +58,30 @@
     #expense span:first-of-type {
         color: #fb3d3d;
     }
+
+    @media all and (min-width: 667px) {
+        header h1,
+        header h2,
+        header h3 {
+            text-align: left;
+        }
+
+        div {
+            margin-left: initial;
+            margin-right: initial;
+            text-align: initial;
+        }
+
+        .income-expense span {
+            margin-left: 0;
+        }
+    }
 </style>
 
 <header>
     <h1>Dashboard</h1>
-    <p>Current Balance</p>
-    <h2>${$balance}</h2>
+    <h2>Current Balance</h2>
+    <h3>${$balance}</h3>
 </header>
 
 <div>

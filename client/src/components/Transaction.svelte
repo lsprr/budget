@@ -28,7 +28,7 @@
     }
 
     .transaction span:nth-of-type(2) {
-        font-size: 12px;
+        font-size: small;
     }
 
     #positive-amount,

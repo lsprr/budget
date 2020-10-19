@@ -93,7 +93,7 @@
 
     #transactions-header {
         display: flex;
-        /* font-size: 14px; */
+        font-size: medium;
         justify-content: space-between;
         margin-bottom: 1rem;
     }
