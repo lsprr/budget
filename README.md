@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/lparra/expenses">
+  <a href="https://github.com/lparra/budget">
     <img src="./demo/budget.png">
   </a>
   <h1 align="center">Budget</h1>
@@ -25,7 +25,7 @@
 
 ## Demo
 
-[Demo](https://lp-expenses.herokuapp.com/)
+[Demo](https://lp-budget.herokuapp.com/)
 
 ## License
 This project is open source and available under the [MIT License](LICENSE).
