@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/lparra/budget">
+  <a href="https://github.com/lsprr/budget">
     <img src="./demo/budget.png">
   </a>
   <h1 align="center">Budget</h1>
