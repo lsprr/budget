@@ -24,8 +24,7 @@
 * CSS
 
 ## Demo
-
-[Demo](https://lp-budget.herokuapp.com/)
+![Demo](demo/budget.gif)
 
 ## License
 This project is open source and available under the [MIT License](LICENSE).
